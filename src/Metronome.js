@@ -68,21 +68,21 @@ class Metronome extends React.Component {
         }
     }
 
-    render(){
-        const {bpm, playing} = this.state
-        // let bpm = 100
-        // let playing = false
+    // render(){
+    //     const {bpm, playing} = this.state
+    //     // let bpm = 100
+    //     // let playing = false
 
-        return (
-            <div className="metronome">
-                <div className="slider">
-                    <div>{bpm} BPM</div>
-                    <input onChange={this.handleBpmChange} min="60" max="240" type="range" value={bpm}></input>
-                </div>
-                <button onClick={this.startStop}>{playing ? "Stop" : "Start"}</button>
-            </div>
-        )
-    }
+    //     return (
+    //         <div className="metronome">
+    //             <div className="slider">
+    //                 <div>{bpm} BPM</div>
+    //                 <input onChange={this.handleBpmChange} min="60" max="240" type="range" value={bpm}></input>
+    //             </div>
+    //             <button onClick={this.startStop}>{playing ? "Stop" : "Start"}</button>
+    //         </div>
+    //     )
+    // }
 }
 
 export default Metronome

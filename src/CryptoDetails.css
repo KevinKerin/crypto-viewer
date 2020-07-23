@@ -1,0 +1,33 @@
+body {
+    text-align: left;
+}
+
+#top-bar {
+    width: 100%;
+    height: 250px;
+    display: flex;
+}
+
+.top-container {
+    flex: 1;
+}
+
+#top-left-container {
+}
+
+#top-center-container {
+}
+
+#top-right-container {
+}
+
+#current-price {
+    margin-left: 0;
+}
+
+
+#percentage-change-arrow {
+}
+
+#percentage-change {
+}

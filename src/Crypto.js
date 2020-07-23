@@ -1,12 +1,13 @@
 import React from 'react';
 import './Crypto.css';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Link, Route} from 'react-router-dom';
 
 class Crypto extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
+            id : this.props.item.id,
             item : this.props.item,
             rank : this.props.item.market_cap_rank,
             name : this.props.item.name,
@@ -24,22 +25,13 @@ class Crypto extends React.Component {
             <tr>
                 <td>{this.state.rank}</td>
                 <td><img style={{height: '25px'}} src={this.state.image}></img></td>
-                <td style={{textAlign: 'left'}}><a >{this.state.name}</a></td>
+                <td style={{textAlign: 'left'}}><Link to={`/crypto/${this.state.id}`}>{this.state.name}</Link></td>
                 <td>{this.state.symbol}</td>
                 <td>${this.state.currentPrice}</td>
                 <td>${this.state.marketCap}</td>
                 <td style={{color: (this.state.priceChangePercentage24h >= 0) ? 'green' : 'red'}}>{this.state.priceChangePercentage24h}%</td>
                 <td style={{color: (this.state.high24h == this.state.currentPrice) ? 'purple' : 'white'}}>${this.state.high24h}</td>
             </tr>
-        //     <Route
-        //     path={`${match.path}/:name`}
-        //     render={({ match }) => (
-        //       <div>
-        //         {" "}
-        //         <h3> {match.params.name} </h3>
-        //       </div>
-        //     )}
-        //   />
         )
     }
 }

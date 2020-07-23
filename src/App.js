@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import Crypto from './Crypto';
+import CryptoDetails from './CryptoDetails';
 import './App.css';
 import './Crypto.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -17,7 +17,6 @@ class App extends React.Component {
       cryptoItems: null,
       counter: 0
     }
-    // this.setCounter = this.setCounter.bind(this)
     this.componentDidMount = this.componentDidMount.bind(this)
   }
 
@@ -46,7 +45,7 @@ class App extends React.Component {
             (<div>Loading...</div>) : 
             <Switch>
               <Route path="/" exact render={(props) => <Table cryptoList={this.state.cryptoList}/>}/>
-              <Route path='/:cryptoId' component={Crypto}/>
+              <Route path="/crypto/:_id" component={CryptoDetails}/>
             </Switch>
           }
         </div>

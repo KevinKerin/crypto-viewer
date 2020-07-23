@@ -12,8 +12,7 @@ class App extends React.Component {
     super();
     this.state = {
       loading: true,
-      data: null,
-      cryptoList: null,
+      cryptoData: null,
       cryptoItems: null,
       counter: 0
     }
@@ -24,11 +23,9 @@ class App extends React.Component {
     fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false")   
     .then(response => response.json())
     .then((responseData) => {
-      this.setState({ data: responseData,
-      cryptoList: responseData.map(item => <Crypto key={item.id} item={item}/>),
+      this.setState({ cryptoData: responseData,
       loading: false});
-      console.log(this.state.data);
-      console.log(this.state.cryptoList);
+      console.log(this.state.cryptoData);
     })
     .catch(error => {
       console.log(error);
@@ -44,7 +41,7 @@ class App extends React.Component {
           {this.state.loading ?
             (<div>Loading...</div>) : 
             <Switch>
-              <Route path="/" exact render={(props) => <Table cryptoList={this.state.cryptoList}/>}/>
+              <Route path="/" exact render={(props) => <Table cryptoData={this.state.cryptoData} cryptoList={this.state.cryptoData}/>}/>
               <Route path="/crypto/:_id" component={CryptoDetails}/>
             </Switch>
           }

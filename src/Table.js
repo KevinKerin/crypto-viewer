@@ -1,11 +1,12 @@
 import React from 'react';
+import Crypto from './Crypto';
 
 class Table extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-            cryptoList: this.props.cryptoList
+            cryptoList: this.props.cryptoData.map(item => <Crypto key={item.id} item={item}/>)
         }
     }
 

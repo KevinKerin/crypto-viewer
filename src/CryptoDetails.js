@@ -7,12 +7,13 @@ class CryptoDetails extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            // isLoading: true,
+            isLoading: true,
             data: null,
             id: this.props.match.params._id,
             item : this.props.item,
             symbol: null,
-            description: null
+            description: null,
+            error: null
             // description: null
             // rank : this.props.item.market_cap_rank,
             // name : this.props.item.name,
@@ -33,23 +34,31 @@ class CryptoDetails extends React.Component {
                 this.setState({
                     data: response,
                     symbol: response.symbol,
-                    description: response.description.en
-                    // isLoading: false,
-                    // description: response.description
+                    description: response.description.en,
+                    isLoading: false
                 })
                 console.log(this.state.data)
                 console.log(response)
                 console.log(this.state.symbol)
             })
+            .catch(errorResponse => {
+                console.log(errorResponse);
+                this.setState({
+                    error: errorResponse,
+                    isLoading: false
+                })
+            });
     }
 
     render(){
-        return (
-            <div>
-                <h1>{this.state.description}</h1>
-                {/* <p>{this.state.description}</p> */}
-            </div>
-        )
+
+        if (this.state.isLoading){
+            return (<p>Loading...</p>);
+        } else if (this.state.error !== null){
+            return (<p>Cryptocurrency not found</p>);
+        } else {
+            return (<h4>{this.state.description}</h4>);
+        }
     }
 }
 

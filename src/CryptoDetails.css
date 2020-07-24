@@ -31,3 +31,24 @@ body {
 
 #percentage-change {
 }
+
+#links-table {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.link-table-td {
+    padding: 5px;
+}
+
+.link-button {
+    width: 120px;
+    height: 25px;
+    text-align: center;
+}
+
+.button-href {
+    margin-top: 10px;
+    color: black;
+    text-decoration: none;
+}

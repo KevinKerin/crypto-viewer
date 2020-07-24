@@ -83,26 +83,36 @@ class CryptoDetails extends React.Component {
         }
         
         return (
-        <div>
-            <p>{websiteListHeading}</p>
-            {this.createButtons(websiteArray)}
-        </div>)
+            <tr>
+                <td className="link-table-td">{websiteListHeading}</td>{this.createButtons(websiteArray, websiteListHeading)}
+            </tr>
+        )
     }
 
-    createButtons(websiteArray){
+    createButtons(websiteArray, websiteListHeading){
         const buttonList = websiteArray.map(website => {
             if(website !== null && website.length > 0){
-                let firstChar = website.indexOf('://') + 3;
-                let websiteName = website.substring(firstChar);
-                let lastChar = website.indexOf('/', firstChar);
+                let firstChar;
+                let websiteName;
+                let lastChar;
+                if(websiteListHeading === "GitHub Urls"){
+                    firstChar = website.indexOf("github") + 10;
+                    websiteName = website.substring(firstChar);
+                } else if(websiteListHeading === "BitBucket Urls"){
+                    firstChar = website.indexOf("bitbucket") + 13;
+                    websiteName = website.substring(firstChar);
+                } else {
+                    firstChar = website.indexOf('://') + 3;
+                    websiteName = website.substring(firstChar);
+                    lastChar = website.indexOf('/', firstChar);
+                }
                 if(lastChar !== -1){
                     websiteName = website.substring(firstChar, lastChar);
                 }
                 if(websiteName.startsWith('www.')){
                     websiteName = websiteName.substring(4);
                 }
-                console.log(website)
-                return (<Button key={website} href={website} name={websiteName}/>);
+                return (<td className="link-table-td"><Button style={{margin: '10px;'}} key={website} href={website} name={websiteName} hrefLength={websiteName.length}/></td>);
             }
         })
         return buttonList;
@@ -116,14 +126,6 @@ class CryptoDetails extends React.Component {
         const imageFile = priceChangePercentage24h >= 0 ? require('./images/up_arrow.png') : require('./images/down_arrow.png');
         const marketCapFormatted = this.state.data.market_data.market_cap[this.state.fiatCurrency].toLocaleString();
         const totalVolume = this.state.data.market_data.total_volume[this.state.fiatCurrency].toLocaleString();
-
-        // let announcementUrls = this.createButtons(this.state.announcement_url);
-        // let blockchainSites = this.createButtons(this.state.blockchain_site);
-        // let chatUrls = this.createButtons(this.state.chat_url);
-        // let homepages = this.createButtons(this.state.homepage);
-        // let officialForumUrls = this.createButtons(this.state.official_forum_url);
-        // let bitbucketUrls = this.createButtons(this.state.repos_url.bitbucket);
-        // let githubUrls = this.createButtons(this.state.repos_url.github);
 
         return(
             <div id="result">
@@ -142,18 +144,22 @@ class CryptoDetails extends React.Component {
                         <h4>24hr Volume</h4>
                         <p>{this.state.currencySymbol}{totalVolume}</p>
                         <h4>24hr Low / 24hr High</h4>
-                        <p>{this.state.currencySymbol}{this.state.data.market_data.high_24h[this.state.fiatCurrency]} / {this.state.currencySymbol}{this.state.data.market_data.low_24h[this.state.fiatCurrency]}</p>
+                        <p>{this.state.currencySymbol}{this.state.data.market_data.low_24h[this.state.fiatCurrency]} / {this.state.currencySymbol}{this.state.data.market_data.high_24h[this.state.fiatCurrency]}</p>
                     </div>
                 </div>
-                <div id="link-details-div">
-                    {this.createLinks(this.state.blockchain_site, 'Blockchain Sites')}
-                    {this.createLinks(this.state.announcement_url, 'Announcement Sites')}
-                    {this.createLinks(this.state.chat_url, 'Chat Sites')}
-                    {this.createLinks(this.state.homepage, 'Home Pages')}
-                    {this.createLinks(this.state.official_forum_url, 'Official Forum Urls')}
-                    {this.createLinks(this.state.repos_url.bitbucket, 'BitBucket Urls')}
-                    {this.createLinks(this.state.repos_url.github, 'GitHub Urls')}
-                </div>
+
+                <table id="links-table">
+                    <tbody>
+                        {this.createLinks(this.state.blockchain_site, 'Blockchain Sites')}
+                        {this.createLinks(this.state.announcement_url, 'Announcement Sites')}
+                        {this.createLinks(this.state.chat_url, 'Chat Sites')}
+                        {this.createLinks(this.state.homepage, 'Home Pages')}
+                        {this.createLinks(this.state.official_forum_url, 'Official Forum Urls')}
+                        {this.createLinks(this.state.repos_url.bitbucket, 'BitBucket Urls')}
+                        {this.createLinks(this.state.repos_url.github, 'GitHub Urls')}
+                    </tbody>
+                </table>
+
             </div>
         )
     }

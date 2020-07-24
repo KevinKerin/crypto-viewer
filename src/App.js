@@ -5,6 +5,8 @@ import './App.css';
 import './Crypto.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Table from './Table';
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
 
 class App extends React.Component {
 
@@ -14,7 +16,8 @@ class App extends React.Component {
       loading: true,
       cryptoData: null,
       cryptoItems: null,
-      counter: 0
+      counter: 0,
+      supportedCurrencies: []
     }
     this.componentDidMount = this.componentDidMount.bind(this)
   }
@@ -30,6 +33,16 @@ class App extends React.Component {
     .catch(error => {
       console.log(error);
       this.setState({ error })});
+
+      fetch('https://api.coingecko.com/api/v3/simple/supported_vs_currencies')
+      .then(reply => reply.json())
+      .then((replyData) => {
+        console.log(replyData)
+        this.setState({
+          supportedCurrencies: replyData
+        });
+        console.log(this.state.supportedCurrencies)
+      })
   }
 
 
@@ -41,7 +54,10 @@ class App extends React.Component {
           {this.state.loading ?
             (<div>Loading...</div>) : 
             <Switch>
-              <Route path="/" exact render={(props) => <Table cryptoData={this.state.cryptoData} cryptoList={this.state.cryptoData}/>}/>
+              <Route path="/" exact render={(props) => 
+                // <Dropdown options={this.state.supportedCurrencies} />
+                <Table cryptoData={this.state.cryptoData} cryptoList={this.state.cryptoData}/>
+              }/>
               <Route path="/crypto/:_id" component={CryptoDetails}/>
             </Switch>
           }

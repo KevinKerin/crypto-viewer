@@ -112,10 +112,14 @@ class CryptoDetails extends React.Component {
                 if(websiteName.startsWith('www.')){
                     websiteName = websiteName.substring(4);
                 }
+<<<<<<< HEAD
                 if(websiteName.length > 14){
                     websiteName = websiteName.substring(0, 11) + "...";
                 }
                 return (<td className="link-table-td"><Button style={{margin: '10px;'}} key={website} href={website} name={websiteName}/></td>);
+=======
+                return (<td className="link-table-td"><Button style={{margin: '10px;'}} key={website} href={website} name={websiteName} hrefLength={websiteName.length}/></td>);
+>>>>>>> 287f3ae4f9d02ead61da0f41d339f66a2eacaf54
             }
         })
         return buttonList;

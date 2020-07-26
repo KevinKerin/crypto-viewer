@@ -10,12 +10,10 @@ class Table extends React.Component {
         this.state = {
             cryptoList: this.props.cryptoData.map(item => <Crypto key={item.id} item={item}/>),
             supportedCurrencies: [],
-<<<<<<< HEAD
             defaultValue: null,
-            dropdown: null
-=======
-            defaultValue: null
->>>>>>> 287f3ae4f9d02ead61da0f41d339f66a2eacaf54
+            dropdown: null,
+            currentColumnSorted: "market_cap_rank",
+            isReversed: false
         }
     }
 
@@ -26,30 +24,45 @@ class Table extends React.Component {
                 console.log(responseData)
                 this.setState({
                     supportedCurrencies: responseData,
-<<<<<<< HEAD
                     defaultValue: responseData.indexOf("usd"),
                     // dropdown: <Dropdown options={responseData} onChange={this.updateCurrency(this)} value={responseData.indexOf("usd")}/>
                 });
+                // this.sortTable("market_cap_rank")
                 console.log(this.state.defaultValue);
             })
     }
 
-    // updateCurrency(dropdown){
-    //     console.log(dropdown.value)
-    // }
+    sortTable(columnToBeSorted, defaultDirection){
 
-    sortTable(index){
-        console.log("Sort table clicked")
-        console.log(index)
-=======
-                    defaultValue: responseData.indexOf("usd")
-                });
+        const tempArray = this.state.cryptoList
+        let reverseSort = (columnToBeSorted === this.state.currentColumnSorted && !this.state.isReversed)
+
+        if (columnToBeSorted === "name" || columnToBeSorted === "symbol"){
+            tempArray.sort((a, b) => {
+                return (reverseSort ? -1 : 1) * a.props.item[columnToBeSorted].localeCompare(b.props.item[columnToBeSorted]);
             })
-    }
+        } else if (reverseSort){
+            if(defaultDirection === "asc"){
+                tempArray.sort((a, b) => b.props.item[columnToBeSorted] - a.props.item[columnToBeSorted]);
+            } else {
+                tempArray.sort((a, b) => a.props.item[columnToBeSorted] - b.props.item[columnToBeSorted]);
+            }
+        } else {
+            if(defaultDirection === "asc"){
+                tempArray.sort((a, b) => a.props.item[columnToBeSorted] - b.props.item[columnToBeSorted]);
+            } else {
+                tempArray.sort((a, b) => b.props.item[columnToBeSorted] - a.props.item[columnToBeSorted]);
+            }
+        }
+        console.log(tempArray)
+        console.log(tempArray.map(item => item.props.item[columnToBeSorted]))
 
-    updateCurrency(dropdown){
-        console.log(dropdown.value)
->>>>>>> 287f3ae4f9d02ead61da0f41d339f66a2eacaf54
+        this.setState({
+            currentColumnSorted: columnToBeSorted,
+            cryptoList: tempArray,
+            currentSortArrangement: columnToBeSorted,
+            isReversed: reverseSort
+        })
     }
 
     render(){
@@ -58,26 +71,16 @@ class Table extends React.Component {
                 <table>
                     <thead>
                     <tr>
-<<<<<<< HEAD
-                        <th onClick={() => {this.sortTable(0)}}>Rank</th>
+                        {/* How to pass id as parameter in onClick method? */}
+                        <th id="market_cap_rank" onClick={() => {this.sortTable("market_cap_rank", "asc")}}>Rank</th>
                         <th></th>
-                        <th onClick={() => {this.sortTable(1)}} style={{textAlign: 'left'}}>Name</th>
-                        <th onClick={() => {this.sortTable(2)}}>Symbol</th>
-=======
-                        <th>Rank</th>
-                        <th></th>
-                        <th style={{textAlign: 'left'}}>Name</th>
-                        <th>Symbol</th>
->>>>>>> 287f3ae4f9d02ead61da0f41d339f66a2eacaf54
-                        <th>Price</th>
-                        <th>Market Cap</th>
-                        <th>% Change (24hr)</th>
-                        <th>24hr High</th>
-<<<<<<< HEAD
+                        <th id="name" onClick={() => {this.sortTable("name", "asc")}} style={{textAlign: 'left'}}>Name</th>
+                        <th id="symbol" onClick={() => {this.sortTable("symbol", "asc")}}>Symbol</th>
+                        <th id="current_price" onClick={() => {this.sortTable("current_price", "desc")}}>Price</th>
+                        <th id="market_cap" onClick={() => {this.sortTable("market_cap", "desc")}}>Market Cap</th>
+                        <th id="price_change_percentage_24h" onClick={() => {this.sortTable("price_change_percentage_24h", "desc")}}>% Change (24hr)</th>
+                        <th id="high_24h" onClick={() => {this.sortTable("high_24h", "desc")}}>24hr High</th>
                         <th>{this.state.dropdown}</th>
-=======
-                        <th><Dropdown id="currency-dropdown" options={this.state.supportedCurrencies} onChange={this.updateCurrency(this)} defaultValue={this.state.defaultValue}/></th>
->>>>>>> 287f3ae4f9d02ead61da0f41d339f66a2eacaf54
                     </tr>
                     </thead>
                     <tbody>

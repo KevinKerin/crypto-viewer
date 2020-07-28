@@ -27,17 +27,22 @@ class CryptoDetails extends React.Component {
                 bitbucket: [],
                 github: []
             }
-            // description: null
-            // rank : this.props.item.market_cap_rank,
-            // name : this.props.item.name,
-            // image : this.props.item.image,
-            // currentPrice : this.props.item.current_price,
-            // marketCap : this.props.item.market_cap.toLocaleString(),
-            // symbol : this.props.item.symbol.toUpperCase(),
-            // priceChangePercentage24h : (Math.round(this.props.item.price_change_percentage_24h * 100) / 100).toFixed(2),
-            // high24h: this.props.item.high_24h
         }
     }
+
+    // componentDidMount(){
+    //     fetch('https://api.coingecko.com/api/v3/simple/supported_vs_currencies')
+    //         .then(response => response.json())
+    //         .then((responseData) => {
+    //             console.log(responseData)
+    //             this.setState({
+    //                 supportedCurrencies: responseData
+    //                 // dropdown: <Dropdown options={responseData} onChange={this.updateCurrency(this)} value={responseData.indexOf("usd")}/>
+    //             });
+    //             // this.sortTable("market_cap_rank")
+    //             console.log(this.state.supportedCurrencies);
+    //         })
+    // }
 
     componentDidMount(){
         this.setState({

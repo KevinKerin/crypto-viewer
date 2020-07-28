@@ -42,8 +42,8 @@ class App extends React.Component {
           {this.state.loading ?
             (<div>Loading...</div>) : 
             <Switch>
-              <Route path="/" exact render={(props) => 
-                <Table cryptoData={this.state.cryptoData} cryptoList={this.state.cryptoData}/>
+              <Route path="/" exact render={() => 
+                <Table key="crypto-table"/>
               }/>
               <Route path="/crypto/:_id" component={CryptoDetails}/>
             </Switch>

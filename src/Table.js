@@ -9,7 +9,7 @@ class Table extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            cryptoList: null,
+            cryptoList: [],
             dropdownMenu: null,
             supportedCurrencies: [],
             selectedCurrency: 'usd',
@@ -24,9 +24,10 @@ class Table extends React.Component {
         .then(response => response.json())
         .then((responseData) => {
             console.log(responseData)
-          this.setState({ cryptoList: responseData.map(item => <Crypto key={item.id} item={item}/>),
-          loading: false});
-          console.log(this.state.cryptoData);
+          this.setState({
+            cryptoList: responseData,
+            loading: false});
+            console.log(this.state.cryptoData);
         })
         .catch(error => {
           console.log(error);
@@ -88,14 +89,14 @@ class Table extends React.Component {
         fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${newCurrency}&order=market_cap_desc&per_page=100&page=1&sparkline=false`)   
             .then(response => response.json())
             .then((responseData) => {
-                console.log(responseData)
-                this.setState({ cryptoList: responseData.map(item => <Crypto key={item.id} item={item}/>),
-                loading: false});
-                console.log(this.state.cryptoList);
+                this.setState({
+                    cryptoList: responseData,
+                    loading: false});
+                    console.log(this.state.cryptoList);
             })
         .catch(error => {
-        console.log(error);
-        this.setState({ error })});
+            console.log(error);
+            this.setState({ error })});
     }
 
     createDropdownButtons(){
@@ -104,6 +105,10 @@ class Table extends React.Component {
         })
         console.log(dropdownButtonList)
         return dropdownButtonList
+    }
+
+    createCryptoElements(){
+        return this.state.cryptoList.map(item => <Crypto key={item.id} item={item}/>)
     }
 
     render(){
@@ -127,7 +132,7 @@ class Table extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.cryptoList}
+                    {this.createCryptoElements()}
                     </tbody>
                 </table>
             </div>)

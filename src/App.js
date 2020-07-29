@@ -17,7 +17,6 @@ class App extends React.Component {
       counter: 0,
       supportedCurrencies: []
     }
-    this.componentDidMount = this.componentDidMount.bind(this)
   }
 
   async componentDidMount() {

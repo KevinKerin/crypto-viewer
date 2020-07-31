@@ -10,13 +10,15 @@ class Table extends React.Component {
         this.state = {
             loading: true,
             cryptoData: [],
-            cryptoList: [],
+            filteredCryptoData: [],
             supportedCurrencies: [],
+            searchBarValue: "",
             selectedCurrency: "usd",
             selectedCurrencySymbol: "",
             currentColumnSorted: "market_cap_rank",
             isReversed: false
         }
+
     }
 
     async componentDidMount() {
@@ -25,6 +27,7 @@ class Table extends React.Component {
         .then((responseData) => {
           this.setState({
             cryptoData: responseData,
+            filteredCryptoData: responseData,
             loading: false});
         })
         .catch(error => {
@@ -60,7 +63,7 @@ class Table extends React.Component {
 // Need to fix up
     sortTable(columnToBeSorted, defaultDirection){
 
-        const tempArray = this.state.cryptoData
+        const tempArray = this.state.filteredCryptoData
 
         let reverseSort = (columnToBeSorted === this.state.currentColumnSorted && !this.state.isReversed)
 
@@ -85,21 +88,29 @@ class Table extends React.Component {
         this.setState({
             currentColumnSorted: columnToBeSorted,
             cryptoData: tempArray,
+            filteredCryptoData: tempArray,
             currentSortArrangement: columnToBeSorted,
             isReversed: reverseSort
         })
 
+
         console.log(this.state.cryptoData)
+        console.log(this.state.filteredCryptoData)
     }
 
     updateTable(event){
+        this.setState({
+            loading: true
+        })
         let newCurrency = event.target.value;
         fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${newCurrency}&order=market_cap_desc&per_page=100&page=1&sparkline=false`)   
             .then(response => response.json())
             .then((responseData) => {
                 this.setState({
                     cryptoData: responseData,
-                    selectedCurrency: newCurrency
+                    filteredCryptoData: responseData,
+                    selectedCurrency: newCurrency,
+                    loading: false
                 });
                 console.log(this.state.cryptoData);
             })
@@ -107,6 +118,22 @@ class Table extends React.Component {
             console.log(error);
             this.setState({ error })
         });
+    }
+
+    handleChange(event){
+
+        let tempArray = [];
+        for (let currency of this.state.cryptoData){
+            if (currency.name.toUpperCase().includes(event.target.value.toUpperCase())  || currency.symbol.toUpperCase().includes(event.target.value.toUpperCase())){
+                tempArray.push(currency)
+            }
+        }
+        console.log(tempArray)
+
+        this.setState({
+            searchBarValue: event.target.value,
+            filteredCryptoData: tempArray
+        })
     }
 
     render(){
@@ -117,6 +144,7 @@ class Table extends React.Component {
                 <select value={this.state.selectedCurrency} onChange={(event) => this.updateTable(event)}>
                     {this.createDropdownButtons()}
                 </select>
+                <input type="text" value={this.state.searchBarValue} onChange={(event) => this.handleChange(event)} />
                 <table>
                     <thead>
                         <tr>
@@ -132,7 +160,7 @@ class Table extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.cryptoData.map(item => <Crypto key={item.id} item={item} selectedReferenceCurrency={this.setCurrency()}/>)}
+                        {this.state.filteredCryptoData.map(item => <Crypto key={item.id} item={item} selectedReferenceCurrency={this.setCurrency()}/>)}
                     </tbody>
                 </table>
                 </div>}

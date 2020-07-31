@@ -4,8 +4,6 @@ import {Switch, Link, Route} from 'react-router-dom';
 
 function Crypto(props){
 
-    console.log(props)
-
     return (
         <tr>
                 <td>{props.item.market_cap_rank}</td>

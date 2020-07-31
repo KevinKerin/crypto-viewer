@@ -25,12 +25,11 @@ class App extends React.Component {
     .then((responseData) => {
       this.setState({ cryptoData: responseData,
       loading: false});
-      console.log(this.state.cryptoData);
     })
     .catch(error => {
       console.log(error);
-      this.setState({ error })});
-
+      this.setState({ error }
+    )});
   }
 
 
@@ -51,7 +50,6 @@ class App extends React.Component {
         </div>
       </Router>
     )
-
   }
 }
 

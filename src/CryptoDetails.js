@@ -7,16 +7,21 @@ class CryptoDetails extends React.Component {
 
     constructor(props){
         super(props);
+
         this.state = {
             isLoading: true,
             data: null,
             id: this.props.match.params._id,
             item : this.props.item,
             symbol: null,
+            selectedReferenceCurrencyCode: 
+                (props.location.aboutProps != null ? props.location.aboutProps.selectedReferenceCurrency.code.toLowerCase()
+                : "usd"),
+            selectedReferenceCurrencySymbol: 
+                (props.location.aboutProps != null ? props.location.aboutProps.selectedReferenceCurrency.symbol
+                : "$"),
             description: null,
             error: null,
-            fiatCurrency: 'usd',
-            currencySymbol: '$',
             announcement_url: [],
             blockchain_site: [],
             chat_url: [],
@@ -26,23 +31,11 @@ class CryptoDetails extends React.Component {
             repos_url: {
                 bitbucket: [],
                 github: []
-            }
-        }
-    }
+            },
 
-    // componentDidMount(){
-    //     fetch('https://api.coingecko.com/api/v3/simple/supported_vs_currencies')
-    //         .then(response => response.json())
-    //         .then((responseData) => {
-    //             console.log(responseData)
-    //             this.setState({
-    //                 supportedCurrencies: responseData
-    //                 // dropdown: <Dropdown options={responseData} onChange={this.updateCurrency(this)} value={responseData.indexOf("usd")}/>
-    //             });
-    //             // this.sortTable("market_cap_rank")
-    //             console.log(this.state.supportedCurrencies);
-    //         })
-    // }
+        }
+
+    }
 
     componentDidMount(){
         this.setState({
@@ -128,12 +121,17 @@ class CryptoDetails extends React.Component {
 
     renderResult(){
 
-        const currentPrice = this.state.data.market_data.current_price[this.state.fiatCurrency]
+        const selectedReferenceCurrencyCode = this.state.selectedReferenceCurrencyCode
+        const selectedReferenceCurrencySymbol = this.state.selectedReferenceCurrencySymbol
+        const currentPrice = this.state.data.market_data.current_price[selectedReferenceCurrencyCode]
         const formattedSymbol = this.state.data.symbol.toUpperCase();
         const priceChangePercentage24h = (Math.round(this.state.data.market_data.price_change_percentage_24h * 100) / 100).toFixed(2);
         const imageFile = priceChangePercentage24h >= 0 ? require('./images/up_arrow.png') : require('./images/down_arrow.png');
-        const marketCapFormatted = this.state.data.market_data.market_cap[this.state.fiatCurrency].toLocaleString();
-        const totalVolume = this.state.data.market_data.total_volume[this.state.fiatCurrency].toLocaleString();
+        const marketCapFormatted = this.state.data.market_data.market_cap[selectedReferenceCurrencyCode].toLocaleString();
+        const totalVolume = this.state.data.market_data.total_volume[selectedReferenceCurrencyCode].toLocaleString();
+
+        console.log(selectedReferenceCurrencySymbol)
+        console.log(selectedReferenceCurrencyCode)
 
         return(
             <div id="result">
@@ -143,16 +141,16 @@ class CryptoDetails extends React.Component {
                         <img id="icon" src={this.state.data.image.small}></img>
                     </div>
                     <div id="top-center-container" className="top-container">
-                        <h1 id="current-price">{this.state.currencySymbol}{currentPrice}</h1>
+                        <h1 id="current-price">{selectedReferenceCurrencySymbol}{currentPrice}</h1>
                         <h2 id="percentage-change" style={{color: (priceChangePercentage24h >= 0) ? 'green' : 'red'}}>{priceChangePercentage24h}% <img id="percentage-change-arrow" src={imageFile} style={{height: '10px'}} /></h2>
                     </div>
                     <div id="top-right-container" className="top-container">
                         <h4>Market Cap</h4>
-                        <p>{this.state.currencySymbol}{marketCapFormatted}</p>
+                        <p>{selectedReferenceCurrencySymbol}{marketCapFormatted}</p>
                         <h4>24hr Volume</h4>
-                        <p>{this.state.currencySymbol}{totalVolume}</p>
+                        <p>{selectedReferenceCurrencySymbol}{totalVolume}</p>
                         <h4>24hr Low / 24hr High</h4>
-                        <p>{this.state.currencySymbol}{this.state.data.market_data.low_24h[this.state.fiatCurrency]} / {this.state.currencySymbol}{this.state.data.market_data.high_24h[this.state.fiatCurrency]}</p>
+                        <p>{selectedReferenceCurrencySymbol}{this.state.data.market_data.low_24h[selectedReferenceCurrencyCode]} / {selectedReferenceCurrencySymbol}{this.state.data.market_data.high_24h[selectedReferenceCurrencyCode]}</p>
                     </div>
                 </div>
 

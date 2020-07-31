@@ -8,6 +8,7 @@ class Table extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            loading: true,
             cryptoData: [],
             cryptoList: [],
             supportedCurrencies: [],
@@ -16,7 +17,6 @@ class Table extends React.Component {
             currentColumnSorted: "market_cap_rank",
             isReversed: false
         }
-        console.log(currencySymbols)
     }
 
     async componentDidMount() {
@@ -48,10 +48,10 @@ class Table extends React.Component {
         return dropdownButtonList
     }
 
-    setCurrencySymbol(){
+    setCurrency(){
         for (const currency of currencySymbols){
             if (currency.code === this.state.selectedCurrency.toUpperCase()){
-                return currency.symbol
+                return currency
             }
         }
         return this.state.selectedCurrency.toUpperCase()
@@ -112,6 +112,8 @@ class Table extends React.Component {
     render(){
         return (
             <div>
+                {this.state.loading ? (<div>Loading...</div>) :
+                <div>
                 <select value={this.state.selectedCurrency} onChange={(event) => this.updateTable(event)}>
                     {this.createDropdownButtons()}
                 </select>
@@ -130,10 +132,12 @@ class Table extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.cryptoData.map(item => <Crypto key={item.id} item={item} currencySymbol={this.setCurrencySymbol()}/>)}
+                        {this.state.cryptoData.map(item => <Crypto key={item.id} item={item} selectedReferenceCurrency={this.setCurrency()}/>)}
                     </tbody>
                 </table>
-            </div>)
+                </div>}
+            </div>
+        )
     }
 }
 

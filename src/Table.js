@@ -1,6 +1,7 @@
 import React from 'react';
 import Crypto from './Crypto';
 import 'react-dropdown/style.css';
+import { currencySymbols } from './currencySymbols.js';
 
 class Table extends React.Component {
 
@@ -10,10 +11,12 @@ class Table extends React.Component {
             cryptoData: [],
             cryptoList: [],
             supportedCurrencies: [],
-            selectedCurrency: 'usd',
+            selectedCurrency: "usd",
+            selectedCurrencySymbol: "",
             currentColumnSorted: "market_cap_rank",
             isReversed: false
         }
+        console.log(currencySymbols)
     }
 
     async componentDidMount() {
@@ -43,6 +46,15 @@ class Table extends React.Component {
             return <option key={currency} value={currency}>{currency.toUpperCase()}</option>
         })
         return dropdownButtonList
+    }
+
+    setCurrencySymbol(){
+        for (const currency of currencySymbols){
+            if (currency.code === this.state.selectedCurrency.toUpperCase()){
+                return currency.symbol
+            }
+        }
+        return this.state.selectedCurrency.toUpperCase()
     }
 
 // Need to fix up
@@ -82,15 +94,12 @@ class Table extends React.Component {
 
     updateTable(event){
         let newCurrency = event.target.value;
-        this.setState({
-            selectedCurrency: newCurrency
-        })
-        console.log(newCurrency)
         fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${newCurrency}&order=market_cap_desc&per_page=100&page=1&sparkline=false`)   
             .then(response => response.json())
             .then((responseData) => {
                 this.setState({
-                    cryptoData: responseData
+                    cryptoData: responseData,
+                    selectedCurrency: newCurrency
                 });
                 console.log(this.state.cryptoData);
             })
@@ -121,7 +130,7 @@ class Table extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.cryptoData.map(item => <Crypto key={item.id} item={item}/>)}
+                        {this.state.cryptoData.map(item => <Crypto key={item.id} item={item} currencySymbol={this.setCurrencySymbol()}/>)}
                     </tbody>
                 </table>
             </div>)

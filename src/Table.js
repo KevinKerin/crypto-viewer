@@ -87,7 +87,6 @@ class Table extends React.Component {
 
         this.setState({
             currentColumnSorted: columnToBeSorted,
-            cryptoData: tempArray,
             filteredCryptoData: tempArray,
             currentSortArrangement: columnToBeSorted,
             isReversed: reverseSort

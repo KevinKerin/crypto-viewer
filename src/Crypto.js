@@ -21,7 +21,7 @@ function Crypto(props){
                 <td>{props.selectedReferenceCurrency.symbol}{props.item.current_price.toLocaleString()}</td>
                 <td>{props.selectedReferenceCurrency.symbol}{props.item.market_cap.toLocaleString()}</td>
                 <td style={{color: (props.item.price_change_percentage_24h >= 0) ? 'green' : 'red'}}>{props.item.price_change_percentage_24h}%</td>
-                <td style={{color: (props.item.high_24h == props.item.current_price) ? 'purple' : 'white'}}>${props.item.high_24h}</td>
+                <td style={{color: (props.item.high_24h == props.item.current_price) ? 'purple' : 'white'}}>{props.selectedReferenceCurrency.symbol}{props.item.high_24h}</td>
         </tr>
     )
 

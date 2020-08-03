@@ -2,18 +2,48 @@ body {
     text-align: left;
 }
 
+.menu-bar {
+    width: 100%;
+    background-color: grey;
+    /* height: 70px; */
+    /* line-height: 70px; */
+}
+
+#refresh-bar {
+    width: 100%;
+    background-color: grey;
+    float: right;
+    height: 70px;
+}
+
 #refresh-div {
-    margin-top: 15px;
-    height: 100px;
+    width: 30%;
+    float: right;
+}
+
+#refresh-button {
+    margin-top: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+    float: right;
+    height: 20px;
 }
 
 #last-updated {
     font-size: 10px;
-    float: left;
+    height: 10px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
 }
 
 #data-refreshed {
-    margin-top: 15px;
+    width: 40%;
+    margin-top: 25px;
+    font-size: 12px;
+    float: right;
+    margin-right: 20px;
+    height: 10px;
 }
 
 #top-bar {

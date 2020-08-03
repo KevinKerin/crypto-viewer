@@ -234,6 +234,15 @@ class CryptoDetails extends React.Component {
 
         return(
             <div id="result">
+                <div>
+                    <div id="refresh-bar">
+                        <div id="refresh-div">
+                            <button id="refresh-button" onClick={() => {this.refresh()}}>Refresh Data</button>
+                            <p id="data-refreshed">{this.state.isRefreshed ? "Data refreshed" : ""}</p>
+                            <p id="last-updated">Last Updated {formattedDate}</p>
+                        </div>
+                    </div>
+                </div>
                 <div id="top-bar">
                     <div id="top-left-container" className="top-container">
                         <h1>{this.state.data.name} ({formattedSymbol})</h1>
@@ -272,11 +281,6 @@ class CryptoDetails extends React.Component {
                         </table>
                     </div>
                     <div id="top-right-container" className="top-container">
-                        <div id="refresh-div">
-                            <p id="last-updated">Last Updated {formattedDate}</p>
-                            <button onClick={() => {this.refresh()}}>Refresh Data</button>
-                            <p id="data-refreshed">{this.state.isRefreshed ? "Data refreshed" : ""}</p>
-                        </div>
                         <h4>Market Cap</h4>
                         <p>{selectedReferenceCurrencySymbol}{marketCapFormatted}</p>
                         <h4>24hr Volume</h4>
@@ -342,9 +346,9 @@ class CryptoDetails extends React.Component {
     render(){
 
         if (this.state.isLoading){
-            return (<p>Loading...</p>);
+            return (<div class="menu-bar">Loading...</div>);
         } else if (this.state.error !== null){
-            return (<p>Cryptocurrency not found</p>);
+            return (<div class="menu-bar">Cryptocurrency not found</div>);
         } else {
             return (this.renderResult())
         }

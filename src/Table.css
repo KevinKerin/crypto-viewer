@@ -2,3 +2,74 @@
     height: 10px;
     width: 10px;
 }
+
+.menu-bar {
+    width: 100%;
+    background-color: grey;
+    height: 70px;
+    line-height: 70px;
+}
+
+#dropdown-div {
+    float: left;
+    margin: 25px;
+    height: 25px;
+    line-height: 25px;
+    width: 20%;
+}
+
+#selected-currency-p {
+    width: 50%;
+    font-size: 12px;
+    margin: 0;
+    height: 20px;
+    float: left;
+}
+
+#dropdown {
+    /* margin-left: 65%; */
+    margin-top: 5px;
+    float: right;
+}
+
+#searchbar {
+    float: right;
+    margin: 25px;
+}
+
+#table {
+    width: 100%;
+    margin-top: 25px;
+}
+
+#market_cap_rank {
+    width: 10%;
+}
+
+#image {
+    width: 5%;
+}
+
+#name {
+    width: 20%;
+}
+
+#symbol {
+    width: 10%;
+}
+
+#current_price {
+    width: 15%;
+}
+
+#market_cap {
+    width: 15%;
+}
+
+#price_change_percentage_24h {
+    width: 15%;
+}
+
+#high_24h {
+    width: 15%;
+}

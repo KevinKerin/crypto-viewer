@@ -1,6 +1,7 @@
 import React from 'react';
 import Crypto from './Crypto';
 import 'react-dropdown/style.css';
+import './Table.css';
 import { currencySymbols } from './currencySymbols.js';
 
 class Table extends React.Component {
@@ -138,18 +139,23 @@ class Table extends React.Component {
     render(){
         return (
             <div>
-                {this.state.loading ? (<div>Loading...</div>) :
+                {this.state.loading ? (<div class="menu-bar">Loading...</div>) :
                 <div>
-                <select value={this.state.selectedCurrency} onChange={(event) => this.updateTable(event)}>
-                    {this.createDropdownButtons()}
-                </select>
-                <input type="text" value={this.state.searchBarValue} onChange={(event) => this.handleChange(event)} />
-                <table>
+                    <div class="menu-bar">
+                        <div id="dropdown-div">
+                            <p id="selected-currency-p">Selected Currency: </p>
+                            <select id="dropdown" value={this.state.selectedCurrency} onChange={(event) => this.updateTable(event)}>
+                            {this.createDropdownButtons()}
+                            </select>
+                        </div>
+                        <input id="searchbar" placeholder="Search" type="text" value={this.state.searchBarValue} onChange={(event) => this.handleChange(event)} />
+                    </div>
+                <table id="table">
                     <thead>
                         <tr>
                             {/* How to pass id as parameter in onClick method? */}
                             <th id="market_cap_rank" onClick={() => {this.sortTable("market_cap_rank", "asc")}}>Rank</th>
-                            <th></th>
+                            <th id="image"></th>
                             <th id="name" onClick={() => {this.sortTable("name", "asc")}} style={{textAlign: 'left'}}>Name</th>
                             <th id="symbol" onClick={() => {this.sortTable("symbol", "asc")}}>Symbol</th>
                             <th id="current_price" onClick={() => {this.sortTable("current_price", "desc")}}>Price</th>

@@ -102,7 +102,7 @@ class CryptoDetails extends React.Component {
                         this.setState({
                             isRefreshed: true
                         })
-                    }, 1000
+                    }, 2000
                 )
                 
                 setTimeout(
@@ -110,7 +110,7 @@ class CryptoDetails extends React.Component {
                         this.setState({
                             isRefreshed: false
                         });
-                    }, 3000
+                    }, 4000
                 );
             }
     }
@@ -250,7 +250,10 @@ class CryptoDetails extends React.Component {
                         <table id="currency-table">
                             <thead>
                                 <tr>
-                                    <th><button onClick={() => {this.updateCurrency("aud")}}>AU$</button></th>
+                                    <th><button onClick={(e) => {
+                                            e.target.style = {backgroundColor: 'red'}
+                                            this.updateCurrency("aud")
+                                        }}>AU$</button></th>
                                     <th><button onClick={() => {this.updateCurrency("usd")}}>US$</button></th>
                                     <th><button onClick={() => {this.updateCurrency("eur")}}>€</button></th>
                                     <th><button onClick={() => {this.updateCurrency("gbp")}}>GB£</button></th>
